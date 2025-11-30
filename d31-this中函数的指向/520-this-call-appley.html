@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //call,apply区别
+    //两者第一个参数都是一样,即为this准备的
+    //第二个参数不同,call是多个参数,apply是数组
+
+    var obj2 = {
+      name : 'obj2',
+      foo2 : function(a) {
+        console.log(a,typeof a)
+        console.log(this)
+      }
+    }
+    obj2.foo2.call(obj,1,2)//1,number,
+    obj2.foo2.apply(obj,[1,2])//1,number,传入的是数组,不代表用的也是数组
+  </script>
+</body>
+</html>

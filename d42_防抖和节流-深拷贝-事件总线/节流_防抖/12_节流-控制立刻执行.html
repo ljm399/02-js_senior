@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <script src="./js/undersocre.js"></script>
+  <script>
+    const inputEl = document.querySelector('input');
+
+    //为什么leading是true,因为节流默认第一次执行，而防抖默认第一次不执行,所以防抖是false。
+    function hythrottle(fn, interval, leading = true) {
+      let startTime = 0; // 记录开始时间
+
+      const _throttle =  function(...argu) {
+        const nowTime = new Date().getTime(); 
+
+        if(!leading && startTime === 0) {
+          startTime = nowTime; 
+
+        }
+
+        const waitTime  = interval - (nowTime - startTime); 
+        if(waitTime <= 0) {
+          fn.apply(this, ...argu)
+          startTime = nowTime
+        }
+      }
+      return _throttle;
+    }
+
+    let counter = 1;
+    inputEl.oninput = hythrottle(function(...argu) {
+      console.log("发送网络请求次数${counter++}",this.value,'我是event'+ event)
+    },1000, false)
+  </script>
+
+</body>
+</html>

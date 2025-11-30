@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //1,函数的默认值是个对象
+    // function foo(obj = {name : 'cao'}) {
+    //   console.log(obj.name)
+    // }
+
+    //2,函数的默认值是个数组
+    // function foo(arr = [1]) {
+    //   console.log(arr)
+    // }
+
+    //3.解构
+    // function foo({name, age} = {name : 'cao', age : 18}) {
+    //   console.log(name,age)
+    // }
+
+    //3,解构带上默认值
+    function foo({name = 'cao', age = 18} = {}) {
+      console.log(name,age)
+    }
+    foo({name : 'zhangsan'})//zhangsan 18
+
+  </script>
+</body>
+</html>

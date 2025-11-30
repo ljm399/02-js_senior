@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <script src="./js/undersocre.js"></script>
+  <script>
+    const inputEl = document.querySelector('input');
+    
+    // 防抖处理代码
+    // let counter = 1;
+    // inputEl.oninput = _.debounce(function() {
+    //   console.log("发送网络请求次数${counter++}",this.value)
+    // },2000)
+
+
+    // 节流处理代码
+    let counter = 1;
+    inputEl.oninput = _.throttle(function() {
+      console.log("发送网络请求次数${counter++}",this.value)
+    },1000)
+  </script>
+
+</body>
+</html>

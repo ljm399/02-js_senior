@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      // console.log(xhr.readyState, xhr.status)
+      console.log(xhr.responseText)
+    }
+    //发送同步请求(后面设为false),必须在send前面
+    xhr.open('GET', 'https://jsonplaceholder.typicode.com/posts/1', false);
+
+    // 不能用setTimeout,因为setTimeout是异步
+      xhr.send();
+      //等到请求完成之后再执行后面的代码
+    document.write("<h1>你好</h1>");
+
+  </script>
+</body>
+</html>

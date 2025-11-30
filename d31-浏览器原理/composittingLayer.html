@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      opacity: 0.5;
+      /* transition: all 0.5s; 可使opacity使box分层,下面一样*/
+      /* will-change: opacity; */
+    }
+    .box2 {
+      width: 100px;
+      height: 100px;
+      background-color: green;
+      opacity: 0.5;
+    }
+    .box2:hover {
+      transform: translateZ(2px);
+      opacity: 1;
+    }
+    .box:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">box</div>
+  <div class="box2">box2</div>
+  <video src="../../../../项目实战/茂职实训/video/apple.mp4"></video>
+  <iframe src="../d31-this中函数的指向/519-this-new绑定.html" frameborder="0">sdfasdf</iframe>
+</body>
+</html>

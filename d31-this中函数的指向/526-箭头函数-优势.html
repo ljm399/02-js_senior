@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //箭头函数是ecmascript6中新增的函数
+
+
+    //1,只有一个参数,()可以省略
+    //2,只有一行代码,{}可以省略,但不能带return,因为不带{}它就代表会return
+    //3,只有一行代码是,不带{}才有return功能,其他情况要加{}
+
+    //4,如果返回的是个对象,则必须加{}
+    var arrow = () => {}//不知道你这{}是指执行体还是对象
+
+    //应用
+    var nums = [1, 2, 3, 4];
+    var result = nums.filter(item => item % 2 === 0)
+                      //map常用于修改数组里面的数据,长度和原数组相同
+                      // 而filter常用于按条件过滤数组里面的数据
+                      .map(item => item * 1)//创建一个新数组，这个新数组由原数组中的每个元素都调用一次提供的函数后的返回值组成
+                      .reduce((preValue,item) => preValue * item,5)
+    console.log(result)    
+
+    //数组的reduce方法
+    //array.reduce((preValue,item) => preValue * item,initialValue)
+    //preValue:上一次调用回调返回的值，第一次调用回调返回的是initialValue,要是没有initialValue,则preValue为数组的第一个元素
+    //要是到了数组的最后一个元素,则preValue作为reduce方法的返回值
+
+    //item:数组中的当前元素
+
+    //initialValue:初始值,第一次调用回调返回的值,可以省略,默认值为数组的第一个元素
+
+    //{prevValue + item},+可以是其他运算符,比如* - / %等
+  </script>
+</body>
+</html>

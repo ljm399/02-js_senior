@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const infos = {
+      name: "John",
+      age: 30,
+      city: "New York",
+      friends : ["Alice", "Bob","bulb"],
+      [Symbol.iterator]: function() {
+        let index = 0;
+        // this绑定:const iterator = infos[Symbol.iterator]();知道是infos
+        
+        // const keys = Object.keys(this);
+        // const values = Object.values(this);
+        const entries = Object.entries(this);
+        const infosIterator = {
+          next: function() {
+            if(index < entries.length) {
+              return { value: entries[index++], done: false };
+            } else {
+              return { done: true };
+            }
+         }
+        }
+        return infosIterator;
+      }
+    }
+
+    // 1.spread syntax
+    // const infosEntries = [...infos];
+    // console.log(infosEntries); //36 Uncaught TypeError: infos is not iterable
+
+    // 2.解构(不是可迭代对象也可以)
+    const { name, age } = infos;
+    console.log(name); // John
+    console.log(age); // 30
+
+    // 3.for of loop
+    // for (let entry of infos) {
+    //   console.log(entry); // ["name", "John"], ["age", 30], ["city", "New York"]
+    // }
+   
+    // 4. new set
+    // const set = new Set(infos);//object is not iterable (cannot read property Symbol(Symbol.iterator))
+
+    // 5. Array.from
+    const array = Array.from(infos);
+    console.log(array); // []没报错,但是空的
+
+    // 6. Promise.all
+    // const array2 = Promise.all(infos).then(res => console.log(res))//object is not iterable
+    /* 
+      第6没报错,结果
+      [Array(2), Array(2), Array(2), Array(2)]
+    */
+
+
+  </script>
+</body>
+</html>

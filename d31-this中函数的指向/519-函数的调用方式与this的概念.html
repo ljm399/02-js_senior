@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //1,函数在调用时除特别函数如箭头函数,js默认给this绑定一个值
+    //2,this的绑定和定义的位置没有关系
+    //3,this的绑定和函数调用方式以及调用的位置有关
+    //4,this是在运行中被绑定的
+
+
+    //函数调用方式
+    function fn() {
+      console.log('this',this)
+    }
+    //方法一:直接调用
+    fn()
+
+    //方法二:通过对象调用
+    var obj = { name : 'obj' }
+    obj.aaa = fn
+    obj.aaa()
+
+    //方法三:通过call和apply调用
+    fn.call(obj)
+
+</script>
+</body>
+</html>

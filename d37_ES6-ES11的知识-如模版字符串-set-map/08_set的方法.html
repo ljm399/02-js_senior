@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let obj = {}
+    let set = new Set([1,1,2,3,obj])
+    //属性
+    console.log(set.size)
+
+    //方法
+    //1,add方法
+    set.add(100)
+    console.log(set)
+
+    //2,delete方法
+    set.delete(3)
+    console.log(set)
+
+    //3,has方法
+    console.log(set.has(obj))
+
+    //4,clear方法
+    // set.clear()
+    // console.log(set)
+
+    //5.forEach
+    set.forEach(item => console.log(item))
+
+    //6. set支持for..of循环,因为set的默认遍历器就是它的值
+    for (const item of set) {
+      console.log(item)
+    }
+
+  </script>
+</body>
+</html>

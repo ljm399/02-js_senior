@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function requestData(url) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(url)
+        }, 2000)
+      })
+    }
+
+    /* 
+      需求:
+      1. 发送请求1, 拿到结果后, 把结果给请求2, 把请求2的结果给请求3, 以此类推...
+    */
+
+    // 注意:方式一到四:都不用返回值,直接打印就行
+    
+    // 方式三: 生成器函数
+    function* getData() {
+      const res1 = yield requestData('code')
+      console.log('第一次请求结果', res1)
+      const res2 = yield requestData(res1 + "cao")
+      console.log('第二次请求结果', res2)
+      const res3 = yield requestData(res2 + "cao")
+      console.log('第三次请求结果', res3)
+    }
+
+    // //这里调用生成器函数不是getData()
+    // const generator = getData()
+    // generator.next().value.then(res1 => {
+    //   generator.next(res1).value.then(res2 => {
+    //     generator.next(res2).value.then(res3 => {
+    //       generator.next(res3)
+    //     })
+    //   })
+    // })
+
+    // 自动执行生成器函数
+    function execGenFn(genFn) {
+      // 1. 获取对应函数的生成器
+      const generator = genFn()
+      
+      // 2. 定义一个递归函数(因为上面的注释层层嵌套的代码都是重复)
+      function exec(res) {
+        const result = generator.next(res)//{done:false,value:Promise}
+        if (result.done) return
+        result.value.then(res => {
+          exec(res)
+        })
+      }
+
+      // 3. 执行递归函数
+      exec()
+    }
+    execGenFn(getData)
+  </script>
+</body>
+</html>

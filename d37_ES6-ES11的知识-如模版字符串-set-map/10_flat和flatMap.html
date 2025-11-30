@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //1,flat的使用
+    let arr = [1, 2, [3, 4], [[5]]];
+    console.log(arr.flat()); //[1, 2, 3, 4, Array(1)]
+    console.log(arr.flat(2)); //[1, 2, 3, 4, 5]
+
+    //2,flatmap的使用
+    const arr2 = ['it is a good day', 'it is a sunny day'];
+    console.log(arr2.flatMap(item => item.split(' ')))
+
+    //原理
+    //注意:要是数组像arr=[1,2]没有空格,会报错
+    //map方法对数组进行遍历,返回一个新的数组
+    const newArr2 = arr2.map(item => item.split(' '))
+    const finalArr2 = newArr2.flat(1)
+    console.log(finalArr2)
+  </script>
+</body>
+</html>

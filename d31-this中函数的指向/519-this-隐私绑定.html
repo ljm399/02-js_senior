@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //隐式绑定:他的调用位置中,是通过某个对象发起的函数调用
+
+
+    //作用域:只有函数的{},才是作用域,对象的{}不是作用域,子作用域的变量也不会去对像的{}里面找,因为他不是
+
+
+
+    function foo() {
+      console.log(this)
+    }
+
+    var obj1 = {
+      name : 'cao',
+      foo : foo,
+      baz : function () {
+        console.log('baz',this)
+      }
+
+    }
+
+    obj1.foo()//obj
+    foo()//window
+    obj1.baz()//obj
+    var baz = obj1.baz
+    baz()//window,这个函数是全局的,所以this指向window
+
+
+    var obj2 = {
+      name : 'obj2',
+      obj1 : obj1,
+    }
+    obj2.obj1.foo()//obj1
+
+    
+  </script>
+</body>
+</html>

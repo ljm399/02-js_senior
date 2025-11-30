@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+   //Error 的三个属性
+   try {
+    throw new Error("这是一个普通错误！");
+    } catch (e) {
+      console.log("message 属性:", e.message);  // "这是一个普通错误！"
+      console.log("name 属性:", e.name);        // "Error"
+      console.log("stack 属性:", e.stack);      // 错误的调用堆栈信息
+    }
+
+    // Error的一些子类
+    //rangeError 示例：
+    try {
+      let arr = new Array(-1);  // 创建数组时指定了非法长度，导致 RangeError
+    } catch (e) {
+      console.log("message 属性:", e.message);  // 通常为 "Invalid array length"
+      console.log("name 属性:", e.name);        // "RangeError"
+      console.log("stack 属性:", e.stack);      // 调用堆栈信息
+    }
+
+    //TypeError 示例：
+    try {
+      let obj = {};
+      obj.nonExistentMethod();  // 尝试调用不存在的属性，导致 TypeError
+    } catch (e) {
+      console.log("message 属性:", e.message);  // "obj.nonExistentMethod is not a function"
+      console.log("name 属性:", e.name);        // "TypeError"
+      console.log("stack 属性:", e.stack);      // 调用堆栈信息
+    }
+
+    //SyntaxError 示例：
+    var a = `var b = 2;console.log(b);`
+    eval(a)//2
+    try {
+      eval("function()");  // 使用 eval() 执行非法代码，导致 SyntaxError
+    } catch (e) {
+      console.log("message 属性:", e.message);  // "Identifier 'x' has already been declared"
+      console.log("name 属性:", e.name);        // "SyntaxError"
+      console.log("stack 属性:", e.stack);      // 调用堆栈信息
+    }
+  </script>
+</body>
+</html>

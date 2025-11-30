@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button>22岁大专怎么面试</button>
+  <script>
+    //js或者一些第三方库的内置函数的this指向主要看经验,经验就是通过以下步骤来积累
+
+    //1,定时器
+    setTimeout(() => {
+      console.log('settimeout',this)
+    }, 1000);//window
+    setTimeout(
+      function () {
+        console.log('settimeout',this)//window
+    },1000)
+    
+    //2,按钮点击监听
+    var btn = document.querySelector('button')
+    btn.addEventListener('click',function () {
+      console.log('addEvenlistener',this)//button元素
+    })
+    btn.onclick = function () {
+      console.log('onclick',this)//button元素
+    }
+    // 匿名函数不会有自己的this,所有this就是btn的this即window
+    btn.addEventListener('click',() => console.log('匿名',this))//window
+
+    // 3,forEach
+    var arr = [1,2,3]
+    arr.forEach(function (item) {
+      console.log('forEach',this)//window
+    })
+    arr.forEach(item => console.log('forEach',this))//window
+  </script>
+</body>
+</html>

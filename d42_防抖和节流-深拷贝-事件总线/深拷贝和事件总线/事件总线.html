@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button class="click">触发</button>
+  <button class="delete">删除</button>
+  <script>
+    //类eventBus => 事件总线对象
+    class HYEventBus {
+      constructor() {
+        this.eventMap = {}
+      }
+
+      on(eventName, eventFn) {
+        // 为什么是eventMap[eventName]而不是this.eventMap.eventName?
+        // 在 JavaScript 中，访问对象属性的方式有两种：点符号（.）和方括号（[]）
+        // 因为eventName是个变量,当属性名是一个变量或需要动态计算时，必须使用方括号访问方式
+        //而点符号访问方式适用于属性名是静态字符串的情况:比如this.eventMap.navclick 只能访问名为 navclick 的属性，而无法根据变量的值来动态访问
+        let eventFns = this.eventMap[eventName]
+        if (!eventFns) {
+          eventFns = []
+          this.eventMap[eventName] = eventFns
+        }
+        eventFns.push(eventFn)
+      }
+
+      emit(eventName, ...args) {
+        let eventFns = this.eventMap[eventName]
+        if (!eventFns) {
+          console.log('事件不存在', eventName)
+          return
+        }
+        eventFns.forEach(fn => {
+          fn(...args)
+        })
+      }
+
+      //删除事件
+      off(eventName, eventFn) {
+        let eventFns = this.eventMap[eventName]
+        if (!eventFns) return
+        for (let i = 0; i < eventFns.length; i++) {
+          const fn = eventFns[i];
+          if (fn === eventFn) {
+            eventFns.splice(i, 1)
+            break
+          }
+        }
+
+        // 如果eventFns已经清空,则删除该事件
+        if (eventFns.length === 0) {
+          delete this.eventMap[eventName]
+        }
+
+
+      }
+    }
+
+    let eventBus = new HYEventBus()
+    
+    // 往事件总线中注册事件处理函数,其他组件才可以触发该事件
+    eventBus.on('navclick', (name, age, hight) => {
+      console.log("第一个navclick", name, age, hight)
+    })
+
+    eventBus.on('navclick', (name, age, hight) => {
+      console.log("第二个navclick", name, age, hight)
+    })
+
+    eventBus.on('otherclick', () => {
+      console.log('otherclick事件触发')
+    })
+
+    // 其他组件里面触发事件
+    const btn = document.querySelector('.click')
+    btn.onclick = () => {
+      console.log('触发事件')
+      eventBus.emit('navclick', 'why', 18, 1.83)
+    }
+
+
+    // 删除事件(问题)
+    // const deleteBtn = document.querySelector('.delete')
+    // deleteBtn.onclick = () => {
+    //   console.log('删除事件')
+
+    // // 这里删除不成功,因为这里的箭头函数和注册的箭头函数不是同一个内存地址,所以无法删除成功
+    //   eventBus.off('navclick', (name, age, hight) => {
+    //     console.log("第二个navclick", name, age, hight)
+    //   })
+    //   eventBus.emit('navclick', 'why', 18, 1.83)
+    // }
+    
+
+    //解决办法
+    let click  = (name, age ,height) => {
+      console.log("click", name, age, height)
+    } 
+    eventBus.on('click', click) 
+    btn.onclick = () => {
+      // debugger 调试方法
+      eventBus.emit('click', 'why', 18, 1.83)
+    }
+
+    setTimeout(() => {
+      eventBus.off('click', click)
+    }, 5000);
+  </script>
+</body>
+</html>

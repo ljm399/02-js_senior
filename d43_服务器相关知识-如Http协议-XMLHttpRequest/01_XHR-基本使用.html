@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //四个步骤
+    const xhr = new XMLHttpRequest(); //第一步
+    xhr.onreadystatechange = function () {
+        console.log(xhr.responseText);
+    }; //第二步
+    xhr.open('GET', 'https://jsonplaceholder.typicode.com/posts/1'); //第三步
+    xhr.send(); //第四步
+
+
+
+
+  </script>
+</body>
+</html>

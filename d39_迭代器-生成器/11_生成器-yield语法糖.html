@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const name = ['John', 'Jane', 'Doe']
+    const age = [20, 22, 18]
+
+    function* createArrayIterator(arr) {
+      // for (let i = 0; i < arr.length; i++) {
+      //   yield arr[i]
+      // }
+      //优化:yield语法糖
+      yield* arr
+    }
+
+    const nameIterator = createArrayIterator(name)
+    console.log(nameIterator.next())// { value: 'John', done: false }
+    console.log(nameIterator.next())// { value: 'Jane', done: false }
+    console.log(nameIterator.next())// { value: 'Doe', done: false }
+    console.log(nameIterator.next())// { value: undefined, done: true }
+
+    // yield* 语法糖替代之前可迭代类的写法
+    class Person {
+      constructor(name, age, height, friend) {
+        this.name = name;
+        this.age = age;
+        this.height = height;
+        this.friend = friend;
+      }
+      
+      //实例方法:即函数,不用加function
+      *[Symbol.iterator]() {//加*表示这是一个生成器函数，Symbol.iterator()是可迭代类的标志
+        yield* this.friend
+      }
+    }
+    const person = new Person('John', 20, '175cm', ['Tom', 'Jerry'])
+    for (const friend of person) {
+      console.log(friend)//Tom Jerry
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function foo(num1, num2) {
+      console.log(this, num1, num2)
+    }
+
+    const fooProxy = new Proxy(foo, {
+      //监听apply方法:当函数被apply调用时触发
+      //第一个参数是目标对象，第二个参数是this指向的上下文，第三个参数是传入的参数数组
+      apply: (target, thisArg, otherArgs) => {
+        console.log('监听到apply调用')
+        target.apply(thisArg, otherArgs)//在Proxy里面帮foo完成了调用,而不是直接调用foo函数(代理)
+      },
+
+      //当函数被new调用时触发
+      construct: (target, otherArray) => {
+        console.log("监听执行了new操作")
+        console.log(target, otherArray)
+        return new target(...otherArray)
+      }
+
+    })
+
+    fooProxy.apply(123, [1, 2])
+    new fooProxy(1, 2)
+  </script>
+</body>
+</html>

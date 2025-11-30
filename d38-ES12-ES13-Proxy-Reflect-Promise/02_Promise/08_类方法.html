@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //类方法
+    //reject
+    const promise = Promise.reject("p失败");
+    promise.catch(error=>{})//下面的all的catch也可以捕获到,因为Promise会告诉每个then/catch
+    //等价于
+    new Promise((_, reject) => {//当前一个参数没用，所以用_代替
+      reject(123);
+    })//这两种方法必须要有个catch捕获错误，否则会报错
+    .catch(error => {})
+
+
+    //all:应用:发送多个网络请求:任何一个失败了就失败了
+    const promise1 = Promise.resolve("p1成功");
+    const promise2 = new Promise((resolve) => {
+      setTimeout(() => resolve("p2成功"), 1000);
+    });
+    const p3 = setTimeout(() => {
+      Promise.resolve('p3成功');
+    },2000)
+    Promise.all([promise1, promise2,p3,promise]).then(([result1, result2,result3]) => {
+      console.log(result1); // 123
+      console.log(result2); // 'foo'
+      console.log(result3); // 'foo'
+    }).catch(error => {
+      console.log(error); // 如果有任何一个失败了，就会走到这里
+    })
+
+    //allSettled:不管成功还是失败，都会走到then里面
+    Promise.allSettled([promise1, promise2,p3,promise]).then(results => {
+      results.forEach((result) => {
+        console.log(result);
+      });
+    })
+
+    //race:任何一个完成了，就走then里面,无论是fulfilled还是rejected都可以走then里面
+    Promise.race([promise1, promise2,p3,promise]).then(result => {
+      console.log(result); // 第一个完成的 Promise 的结果,这是reject的结果
+    })
+
+    //any:任何一个成功了，就走then里面,必须有一个成功，否则就走catch里面
+    Promise.any([promise1, promise2,p3,promise]).then(result => {
+      console.log(result); //p1成功
+    }).catch(error => {
+      console.log('没有一个成功的',error);
+    })
+
+    Promise.any([promise]).then(result => {
+      console.log(result); // 第一个完成的 Promise 的结果
+    }).catch(error => {
+      console.log('没有一个成功的',error);
+    })//没有一个成功的 AggregateError: All promises were rejected
+  </script>
+</body>
+</html>

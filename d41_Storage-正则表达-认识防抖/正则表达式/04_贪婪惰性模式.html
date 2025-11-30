@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const message = "24岁<大专生>,面试为什么要你 因为我有<技术>,<我是什么人我平时干什么决定>"
+    // 默认: 贪婪模式
+    const reg = /<.+>/ig
+    console.log(message.match(reg))
+    
+
+    // 惰性模式
+    const reg2 = /<.+?>/ig
+    console.log(message.match(reg2))
+  </script>
+</body>
+</html>

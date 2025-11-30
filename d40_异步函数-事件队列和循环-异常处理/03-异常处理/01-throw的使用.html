@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>   
+</head>
+<body>
+  <script>
+    function foo() {
+      //1. number/String/boolean
+      // throw '是个错误' //Uncaught 是个错误
+
+      //2. 抛出一个自定义对象
+      // throw { errMessage: '我是一个错误对象', errCode: 1002 }
+
+
+      // 3. error类: JavaScript内置的错误类
+      // 可以反映错误函数的调用栈以及位置信息
+      
+      throw new Error('我是一个错误对象')
+      // 结果
+      /* 
+      throw的使用.html:19 Uncaught Error: 我是一个错误对象
+      at foo (throw的使用.html:19:13): 抛出错误的位置
+      at throw的使用.html:24:5: 调用栈
+      */
+
+
+      //抛出错误后，后面的代码不会执行了
+      console.log('foo function end')
+    }
+
+    foo()
+  </script>
+</body>
+</html>

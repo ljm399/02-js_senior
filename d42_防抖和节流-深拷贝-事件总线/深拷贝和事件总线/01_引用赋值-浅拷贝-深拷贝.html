@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const set = new Set([1, 2, 3, 4, 5]);
+    const info = {
+      name: "John",
+      age: 30,
+      address: {
+        city: "New York",
+      },
+      set,
+      running: function() {},
+      [Symbol()]:'abc',
+      // self : info
+    }
+    // info.self = info
+    // console.log(info.self)
+
+
+    // 1. 引用赋值
+    const info2 = info;
+    console.log(info2 === info); // true 并非创建个新对象，而是创建个新变量，指向同一个对象(储存对象的内存地址)
+
+
+    // 2. 浅拷贝
+    const info3 = {...info};
+    console.log(info3 === info); // false 创建个新对象，但是info的对象是引用赋值,running和[Symbol()]还在,只是引用赋值
+    console.log(info3)
+
+
+    // 深拷贝
+    //JSON规范不允许对象里面有循环引用,否则内部无限递归导致堆栈溢出,所以报错Uncaught TypeError: Converting circular structure to JSON
+    const info4 = JSON.parse(JSON.stringify(info));
+    console.log(info4 === info); // false 但running,[Symbol()]以及set丢失了
+    console.log(info4)
+
+    // // 手动实现深拷贝（递归）
+    // function deepClone(obj) {
+    //   if (typeof obj !== 'object' || obj == null) return obj;
+    //   let result = Array.isArray(obj) ? [] : {};
+    //   for (let key in obj) {
+    //     result[key] = deepClone(obj[key]);
+    //   }
+    //   return result;
+    // }
+
+
+
+
+
+  </script>
+</body>
+</html>

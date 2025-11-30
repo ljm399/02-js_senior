@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <button class="cancel">取消</button>
+  <script src="./js/hy-debounce.js"></script>
+  <script>
+    const inputEl = document.querySelector('input')
+    const cancelBtn = document.querySelector('.cancel')
+    let counter = 1
+    const debounceFn = hydebounce(function (event) {
+    //这里能拿到oninput的event是hydebounce函数里面的操作
+    console.log("发送网络请求${counter++}",this.value, event)
+    }, 1000)
+
+    inputEl.oninput = debounceFn
+  </script>
+</body>
+</html>

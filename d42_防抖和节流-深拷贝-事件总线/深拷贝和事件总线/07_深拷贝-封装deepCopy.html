@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="./utils/isObject.js"></script>
+  <script src="./utils/deepCopy.js"></script>
+  <script>
+       const s1 = Symbol('s1');
+      const s2 = Symbol('s2');
+      const set = new Set([1,2,3]);
+      const info = {
+
+        // 1,普通类型
+        name: "John",
+        age: 30,
+
+        // 2,对象
+        address: {
+          city: "New York",
+        },
+
+        // 3,数组
+        hobbies: ["reading", "swimming"],
+
+        // 4,set类型
+        set,
+
+        // 5,函数类型
+        running: function() {
+          return "running";
+        },
+
+        // 6,symbol类型
+        // 6.1 symbol是值
+        symbol : Symbol('s1'),
+
+        // 6.2 symbol是键
+        [s1]:'abc',
+        [s2]:'abc',
+      }
+      info.self = info;
+      console.log(info.self)
+      console.log(deepCopy(info))
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const obj = {
+      name : 'codecao',
+      age : 18,
+      height : 1.88
+    }
+    
+    // let _name = obj.name
+    // //监听一个属性
+    // Object.defineProperty(obj, 'name', {
+    //   set : function(newValue) {
+    //     console.log("监听: 给name属性赋值了", newValue)//codecao2
+    //     _name = newValue
+    //   },
+    //   get : function() {
+    //     console.log("监听: 获取了name属性值")
+
+    //     //不能是直接return obj.name, 这样又会触发get方法，造成死循环
+    //     return _name
+    //   }
+    // })
+
+    // console.log(obj.name)//codecao
+    // obj.name = 'codecao2'
+
+
+    //监听多个属性
+    const keys = Object.keys(obj)
+    for (const key of keys) {
+      let value = obj[key]
+      Object.defineProperty(obj, key, {
+        set : function(newValue) {
+          console.log(`监听: 给${key}属性赋值了`, newValue)
+          value = newValue
+        },
+        get : function() {
+          console.log(`监听: 获取了${key}属性值`)
+          return value
+        }
+      })
+    }
+
+    console.log(obj.age)
+    obj.age = 1111
+
+    
+  </script>
+</body>
+</html>

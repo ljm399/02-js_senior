@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //1,暂时性死区和位置无关,与执行顺序有关
+    function test() {
+      console.log(message)
+    }
+    let message = "hello world"
+    test()//hello world
+
+    //2,暂时性死区形成之后,这个区域不能访问变量
+    let a = 'hello'
+    function foo() {
+      console.log(a)
+      let a = 'world'// Cannot access 'a' before initialization
+    }
+    // foo()
+
+    {
+      var cao = 'hello'
+      let b = 'hello'
+    }
+    console.log(cao)//hello
+    console.log(b)//b is not defined
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //中断函数方法
+    //1. return 2. throw new Error() 3. yield 
+
+    const promise = new Promise((resolve, reject) => {
+      resolve("Success!");
+      // reject("Error!");
+
+    })
+
+    //then的返回值
+    promise.then((res) => {
+      throw new Error("Error!");//这个then方法后面的代码不会执行,直接跳到catch方法中
+      console.log("第一个Promise的then方法",res); 
+      return "Success!"
+    }).then(res => {
+      console.log("第二个Promise的then",res); 
+    })
+    .catch(err => {
+      console.log('第一个Promise的catch方法',err); 
+    })//必须要有catch方法捕获错误，否则会抛出异常
+
+
+
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <button>取消</button>
+  <script src="./js/hy-throttle.js"></script>
+  <script>
+    const inputEl = document.querySelector('input');
+
+    let counter = 1;
+    const throttleFn = hythrottle(function( name, age) {
+      console.log("发送网络请求次数${counter++}",this.value,'我是event'+ event,age, name)
+      return '我是返回值-fn'
+    },1000, {trailing : true})
+
+    //promise获取返回值('我是返回值-fn')
+    throttleFn('codecao', 18).then(res => {
+      console.log('成功获取返回值', res)
+    }).catch(err => {
+      console.log('捕获到错误', err)
+    })
+
+
+  </script>
+
+</body>
+</html>

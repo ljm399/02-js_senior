@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 词边界
+    var str = "hello world";
+    console.log(str.match(/\bworld\b/)); // ["world"]
+    console.log(str.match(/\bello/)); null
+    //有两个或者多个单词边界则只有一个匹配成功
+    console.log(/\bhell\b/.test(str)); // true
+  </script>
+</body>
+</html>

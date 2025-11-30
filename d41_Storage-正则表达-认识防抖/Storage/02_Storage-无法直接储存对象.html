@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // localStorage.setItem('name', {name: 'John', age: 30})//[object Object]
+
+    // 解决
+    localStorage.setItem('name', JSON.stringify({name: 'John', age: 30}))//{"name":"John","age":30}
+    console.log(JSON.parse(localStorage.getItem('name')))
+  </script>
+</body>
+</html>

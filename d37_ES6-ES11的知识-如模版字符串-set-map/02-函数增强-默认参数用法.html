@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function foo(arg1) {
+      //1,两种不严谨写法()
+      // (1) arg1 = arg1 ? arg1 : '晚上默认值'//下面4种调用值都一样
+      // (2) arg1 = arg1 || '晚上默认值'//下面4种调用值都一样
+
+      //严谨写法
+      //三元运算符
+      // arg = (arg1 === undefined || arg1 === null) ? '晚上默认值' : arg1;//下面值都不是"晚上默认值"
+
+      //ES6写法(上面写法的简化版)
+      arg1 = arg1 ?? '晚上默认值';
+
+      console.log(arg1)
+    }
+    foo(123)
+    foo()
+    foo(0)
+    foo("")
+    foo(false)
+  </script>
+</body>
+</html>

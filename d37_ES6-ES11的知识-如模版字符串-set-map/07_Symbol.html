@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //Symbol产生因为对象的值可能会因为同名key而被覆盖，所以使用Symbol作为唯一的标识符。
+    //Symbol是独一无二的，即使同名也不会被覆盖。
+
+    //1,基本使用
+    const s1 = Symbol()
+    const s2 = Symbol()
+    const obj = {
+      name : 'cao',
+      age : 18,
+      [s1] : 'aaa',//[]计算属性名,里面的值必须是表达式如1+2，可以是Symbol值。
+      [s2] : 'bbbb'
+    }
+    console.log(obj[s1])
+    
+
+    //2,加入对象中
+    const obj1 = {}
+    obj1[s1] = 'a22'
+    console.log(obj1[s1])
+    
+    const obj2 = {}
+    Object.defineProperty(obj2, s1, {
+      value : 'a33'
+    })
+    console.log(obj2[s1])
+
+
+    //3,获取symbol对应的key
+    console.log(Object.keys(obj))//无法获取symbol对应的key
+    console.log(Object.getOwnPropertySymbols(obj))//[Symbol(), Symbol()]
+    const symbolKeys = Object.getOwnPropertySymbols(obj)
+    //obj不是可迭代对象
+    for(const symbolKey of symbolKeys){
+      console.log(obj[symbolKey])//获取对应的值,只有symbol没有age
+    }
+
+
+    //4,description
+    //3.1,Symbol函数生成的值,都是独一无二的
+    const s3 = Symbol('ccc')
+    console.log(s3)//Symbol(ccc)
+    console.log(s3.description)//ccc
+    const s4 = Symbol('ccc')
+    console.log(s3 === s4)//false
+
+    //3.2,如果相同的值,可以通过Symbol.for()生成相同的symbol
+    const s5 = Symbol.for('ccc')
+    const s6 = Symbol.for('ccc')
+    console.log(s5 === s6)//true
+    //获取传入Symbol.for的值
+    console.log(Symbol.keyFor(s5))//ccc
+    console.log(s5.description)//ccc
+  </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var name = 'window';//默认值
+    function Person (name) {
+      this.name = name;
+      this.foo1 = function () {
+        console.log(this.name);
+      },
+      this.foo2 = () => console.log(this.name);
+      this.foo3 = function () {
+        return function () {
+          console.log(this.name);
+        }
+      },
+      this.foo4 = function () {
+        return (() => console.log(this.name))//有4层,第一层是箭头函数的{},第二次是foo4的{},第三层是Person的{},第四层是window
+      }
+    }
+
+    //person1/person2都是对象(实列instance)
+    var person1 = new Person('person1');//在栈里面创建一个person1对象,里面有person的属性和方法的堆内存地址,在堆里面,如属性则存在这个内存地址的这个内存空间,方法则这个内存地址只存储这个方法(函数或者对象)的内存地址,这个方法的实体在堆另创建内存空间存储
+    /* 更加详细的解释var person1 = new Person('person1');
+      1,括号里面的person1是参数,即person的属性name的值(this.name = 'person1')
+
+      2,var person1 = new Person('person1')相当于var person1 = {}
+        然后person1.__proto__ = Person.prototype;(这个空对象的 __proto__ 指向 Person.prototype),这样person1就拥有了Person的原型上的属性和方法,即继承了Person的方法和属性
+        最后Person.call(person1, 'person1');把 this 绑定到新创建的 person1
+
+
+    */
+    var person2 = new Person('person2');//Person是函数,且只能是函数,一对象不可以传参数,二new是构建函数(person)成对象(person2)
+
+    console.log(typeof person1,person1);//object
+    console.log(typeof Person,Person);//function
+
+    person1.foo1();//隐式绑定:person1
+    person1.foo1.call(person2);//主动绑定:person2
+    /* 解释为什么是person2,而不是new绑定的person1
+       因为foo1是普通函数,普通函数的this指向调用它的那个对象(即this是调用时绑定的,this绑定是动态过程!)
+       而new Person('person1')虽然是new绑定的但已经执行完成了
+     */
+
+    person1.foo2()//箭头函数没this,就没隐私绑定,上层作用域:即Person,而Person通过new绑定给你person1,所以其this是person1,不要看31行代码,那是结果,this是过程中绑定的,即看你所能看到的这个函数
+    person1.foo2.call(person2)//foo2是箭头无法主动绑定,故还是上层作用域即person1
+
+    person1.foo3()()//返回值和(),默认绑定:window
+    person1.foo3.call(person2)()//与上面一样,默认绑定:window
+    person1.foo3().call(person2)//第一个括号是返回值,返回值的主动绑定即person2
+
+    person1.foo4()()//返回值和(),上层函数由person1.foo4知道隐私绑定即person1
+    person1.foo4.call(person2)()//返回值和(),由person1.foo4.call知主动绑定,即person2
+    person1.foo4().call(person2)//返回值和主动绑定,上层函数由person1.foo4知道隐私绑定即person1
+    
+  </script>
+</body>
+</html>

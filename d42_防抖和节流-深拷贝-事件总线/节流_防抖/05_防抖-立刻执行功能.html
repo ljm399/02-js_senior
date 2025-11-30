@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <button class="cancel">取消</button>
+  <!-- 本地引入 -->
+  <script>
+    const inputEl = document.querySelector('input')
+
+    //为什么immediate默认值是false,因为本来原函数是没有立刻执行的,而尾部执行本来就有,所有其默认值是true
+    function hydebounce(fn, delay, immediate = false) {
+      //记录上次事件触发的timer
+      let timer = null
+      let isInvoke = false
+      
+      //不能用箭头函数,否则this执行hydebounce的this即window
+      let _debounce = function (...argu) {
+
+        //如果上次timer未在delay时间内执行,则清除上次的timer
+        if(timer) clearTimeout(timer)
+
+        //立刻执行功能
+        if (immediate && !isInvoke) {
+
+          fn.apply(this, argu)
+          // immediate = false//不能这样写
+          //原因: 1. 用户传来参数的状态不要改变
+          //      2.一个函数完成一个功能,一个参数储存一个状态----原则
+          isInvoke = true
+          return
+        }
+
+        timer = setTimeout(() => {
+          fn.apply(this, argu)
+          timer = null
+        }, delay)
+      }
+
+      _debounce.cancel = function () {
+        clearTimeout(timer)
+      }
+
+      return _debounce
+    }
+
+    let counter = 1
+
+    const debounceFn = hydebounce(function (event) {
+      //这里能拿到oninput的event是hydebounce函数里面的操作
+      console.log("发送网络请求${counter++}",this.value, event)
+    }, 1000, true)
+
+    inputEl.oninput = debounceFn
+
+  </script>
+</body>
+</html>

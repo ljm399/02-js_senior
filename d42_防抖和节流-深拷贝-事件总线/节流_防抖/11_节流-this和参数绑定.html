@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <script src="./js/undersocre.js"></script>
+  <script>
+    const inputEl = document.querySelector('input');
+
+    //interval翻译: 间隔
+    function hythrottle(fn, interval) {
+      let startTime = Date.now(); // 记录开始时间
+
+      const _throttle =  function(...argu) {
+        const nowTime = new Date().getTime(); // 获取当前时间
+        const waitTime  = interval - (nowTime - startTime); // 计算剩余等待时间
+        if(waitTime <= 0) {
+          fn.apply(this, ...argu)
+          startTime = nowTime
+        }
+      }
+      return _throttle;
+    }
+
+    let counter = 1;
+    inputEl.oninput = hythrottle(function(...argu) {
+      console.log("发送网络请求次数${counter++}",this.value,'我是event'+ event)
+    },1000)
+  </script>
+
+</body>
+</html>

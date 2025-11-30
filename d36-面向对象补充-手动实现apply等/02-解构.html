@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //2,对象的解构
+    let obj = {name : 'cao', age : 18, height : 1.88}
+    //2.1基本使用
+    var {name, age} = obj;
+
+    //2.2 顺序问题:对象解构没有顺序,根据key解构
+    var {age, name} = obj;
+    console.log(age, name)
+
+    //2.3 对变量进行重命名
+    var {name : myName, age} = obj;
+    console.log(myName, age)
+
+    //2.4 默认值
+    let obj2 = {name : undefined, age : undefined, height : 1.88}
+    var {
+      name : wHeight ,
+      age : wAge = 10,
+      height : wage
+    } = obj2
+    console.log(wHeight, wAge, wage)
+
+    // 2.5 对象的剩余内容
+    var {name, ...rest} = obj;
+    console.log(name, rest)//cao {age: 18, height: 1.88}
+
+    //应用
+    function getPosition({x, y}) {//{x,y}对传入的数据解构了
+      console.log(x, y)
+    }
+    getPosition({x: 10, y: 20})
+  </script>
+</body>
+</html>

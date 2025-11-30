@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //可迭代器中断-可迭代类的使用:只是遍历的类中规定的数据
+    class Person {
+      constructor(name, age, height, friend) {
+        this.name = name;
+        this.age = age;
+        this.height = height;
+        this.friend = friend;
+      }
+      [Symbol.iterator]() {
+        let index = 0;
+        const iterator = {
+          next: () => {//必须用箭头函数，否则this指向不对
+            if (index < this.friend.length) {
+              return { value: this.friend[index++], done: false };
+            } else {
+              return { done: true };
+            }
+          },
+          return: () => {
+            console.log('迭代器中断执行了')
+            return { done: true };
+          }
+        }
+        return iterator;
+      }
+    }
+
+    const p1 = new Person('John', 20, '175cm', ['Mike', 'Tom', 'Lucy', 'Bob']);
+    for (const friend of p1) {
+      console.log(friend);//'Mike', 'Tom', 'Lucy', 'Bob'
+      break
+    }
+  </script>
+</body>
+</html>

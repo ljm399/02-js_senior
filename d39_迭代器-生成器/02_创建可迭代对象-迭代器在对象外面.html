@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const infos = {
+      name: "John",
+      age: 30,
+      city: "New York",
+
+
+      //只有数组是迭代器，对象不是迭代器。如果要遍历对象的属性，可以使用for...in循环或者Object.keys()等方法来获取所有属性的键名数组，然后进行遍历。
+      //所有这里的name,age,city无法通过迭代器遍历。
+      friends : ["Alice", "Bob","bulb"],
+    }
+    let index = 0;
+    const infosIterator = {
+      next: function() {
+        if(index < infos.friends.length) {
+          return { value: infos.friends[index++], done: false };
+        } else {
+          return { done: true };
+        }
+      }
+    }
+
+    //报错:infosIterator不是一个迭代器，不能使用for...of循环遍历。
+    //infosIterator返回一个迭代器,而不是迭代器对象。
+    // for(let result of infosIterator) {
+    //   console.log(result); // 
+    // }
+
+    console.log(infosIterator.next())
+    console.log(infosIterator.next())
+    console.log(infosIterator.next())//{value: 'bulb', done: false}
+    console.log(infosIterator.next())
+
+    
+  </script>
+</body>
+</html>

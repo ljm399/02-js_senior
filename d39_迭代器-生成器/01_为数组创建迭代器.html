@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const nums = [100, 200, 300]
+    function createArrayIterator(arr) {
+      let index = 0;
+      return {
+        next: function() {
+          if(index < arr.length) {
+            return { done: false, value: arr[index++]}
+          } else {
+            return { done: true }
+          }
+        }
+      }
+    }
+
+    //提示:当控制台不是 { done: false, value: 100 },可以点击刷新
+    const numsIterator = createArrayIterator(nums);
+    console.log(numsIterator.next()); // { done: false, value: 100 }
+    console.log(numsIterator.next()); // { done: false, value: 200 }
+    console.log(numsIterator.next()); // { done: false, value: 300 }
+    console.log(numsIterator.next()); // { done: true }
+  </script>
+</body>
+</html>

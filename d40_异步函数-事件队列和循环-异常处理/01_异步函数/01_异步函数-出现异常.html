@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    async function foo() {
+      //异步函数出现报错,不会像普通函数一样直接报错,而是会把错误作为Promise.reject()处理,这样外部catch()方法可以捕获错误
+      
+      //方式一:不用返回
+      /* 
+        "abc".filter() 直接在 foo() 里抛出了同步错误（TypeError）。
+        然后 async function 会自动把抛出的同步错误变成 rejected 的 Promise
+      */
+      // 'abc'.filter()//捕获的错误 err TypeError: "abc".filter is not a function
+      
+      //方式二:自定义条件要是报错
+       if (false) {
+        throw new Error('反正错了')//err Error: 反正错了
+      }
+      
+      //方式三:自己返回个新的Promise
+      // return new Promise((resolve, reject) => {
+      //   reject('反正错了')
+      // })
+      
+      //方式四
+       //return  Promise.reject('反正错了')
+      
+      // 方法五:最常用:这一步外部不用再捕获(即外部不需要再.catch),自己可以
+      try {
+        aa
+      } catch (error) {
+        console.log('捕获到错误', error)//捕获到错误 ReferenceError: aa is not defined
+      }
+    }
+    //foo().then(res => console.log('res', res))
+    //.catch(err => console.log('err', err))
+    
+    //方式五
+    foo()
+  </script>
+</body>
+</html>

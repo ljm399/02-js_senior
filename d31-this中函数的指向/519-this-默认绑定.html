@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //倒数第二个是箭头函数,this没值故会去外面作用域找,而默认绑定的function的this有值,指向全局对象
+
+    // "use strict"
+
+    // 默认绑定:独立函数调用
+    //也叫隐式丢失:函数的调用位置中,没有对象发起函数调用,也叫独立函数调用可以理解为函数没有被绑定到某个对象上
+
+    function foo() {
+      console.log(this)
+    }
+    foo()
+
+    function foo2() { 
+      foo()////对应函数没有返回值,所有这行代码没有值
+      console.log(this)//foo2()中的this指向全局对象
+    }
+
+    function foo3() {
+      foo2()////对应函数没有返回值,所有这行代码没有值
+      console.log(this)//foo3()中的this指向全局对象
+    }
+
+    foo3()//对应函数没有返回值,所有这行代码没有值
+
+    //案例二
+    function fn(baz) {
+      baz()
+    }
+    var obj = {
+      name: 'obj',
+      fun : () => {
+        console.log(this)//过程:var baz = 这个箭头函数;
+                        //然后箭头函数里面的this向fn里面找,而fn里面的this指向全局对象,严格模式下,this指向window,因为fn的this指向全局对象,而其他this是直接指向全局对象(window),所有严格模式下,this是undefined
+      },
+      bar : function () {
+        console.log(this)//如同:var baz = obj.bar;baz()
+      }
+    }
+    fn(obj.fun)//没有返回值
+    fn(obj.bar)//依旧没有返回值
+  </script>
+</body>
+</html>

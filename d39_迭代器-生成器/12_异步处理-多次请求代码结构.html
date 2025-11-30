@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 封装请求方法: url -> promise
+    function requestData(url) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(url)
+        }, 2000)
+      })
+    }
+
+    /* 
+      需求:
+      1. 发送请求1, 拿到结果后, 把结果给请求2, 把请求2的结果给请求3, 以此类推...
+    */
+
+    // 注意:方式一到四:都不用返回值,直接打印就行
+    // 方式一: 层层嵌套(回调地狱)
+    // function getData() {
+    //   // 1. 第一次请求(code代替url)
+    //   requestData('code').then(res1 => {
+    //     console.log('第一次请求结果', res1)
+
+    //     // 2. 第二次请求(传人res1)
+    //     requestData(res1 + "cao").then(res2 => {
+    //       console.log('第二次请求结果', res2)
+    //       // 3. 第三次请求(传人res2)
+    //       requestData(res2 + "cao").then(res3 => {
+    //         console.log('第三次请求结果', res3)
+    //       })
+    //     })
+    //   })
+    // }
+
+    // 方式二:Promise链式调用,解决回调地狱问题
+    // function getData() {
+    //   requestData('code').then(res1 => {
+    //     console.log('第一次请求结果', res1)
+    //     return requestData(res1 + "cao") // 返回一个新的promise对象(request返回的是promise对象)
+    //   }).then(res2 => {
+    //     console.log('第二次请求结果', res2)
+    //     return requestData(res2 + "cao")
+    //   }).then(res3 => {
+    //     console.log('第三次请求结果', res3)
+    //   })
+    // }
+    // getData()
+    
+    // 方式三: 生成器函数
+    // function* getData() {
+    //   const res1 = yield requestData('code')
+    //   console.log('第一次请求结果', res1)
+    //   const res2 = yield requestData(res1 + "cao")
+    //   console.log('第二次请求结果', res2)
+    //   const res3 = yield requestData(res2 + "cao")
+    //   console.log('第三次请求结果', res3)
+    // }
+
+    // //这里调用生成器函数不是getData()
+    // const generator = getData()
+    // generator.next().value.then(res1 => {
+    //   generator.next(res1).value.then(res2 => {
+    //     generator.next(res2).value.then(res3 => {
+    //       generator.next(res3)
+    //     })
+    //   })
+    // })
+
+    //再次提醒:方式一到四:都不用返回值,直接打印就行
+    // 方式四: async/await,原理就是方式三
+    async function getData() {
+      const res1 = await requestData('code')
+      console.log('第一次请求结果', res1)
+      const res2 = await requestData(res1 + "cao")
+      console.log('第二次请求结果', res2)
+      const res3 = await requestData(res2 + "cao")
+      console.log('第三次请求结果', res3)
+    }
+    getData()
+  
+  </script>
+</body>
+</html>

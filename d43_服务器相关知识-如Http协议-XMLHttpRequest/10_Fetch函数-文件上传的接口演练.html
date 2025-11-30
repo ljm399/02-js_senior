@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" class="file">
+  <button>上传照片</button>
+  <script>
+    const uploadBtn = document.querySelector('button');
+    uploadBtn.onclick = async function () {
+      //表单
+      const fileEl = document.querySelector('.file')
+      const file = fileEl.files[0]
+      console.log("fileEl", fileEl)
+      const formData = new FormData()
+      formData.append('file', file)
+
+      // 发送fetch请求
+      const response = await fetch("xxx", {
+        method : 'POST',
+        body: formData
+      })
+      const res = await response.json()
+      console.log("res", res)
+
+    }
+  </script>
+</body>
+</html>

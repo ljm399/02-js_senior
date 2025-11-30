@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //情况一:显示绑定null/undefined,显示绑定会被忽略,那么使用的规则是默认绑定
+    function foo() {
+      console.log('foo',this)
+    }
+    foo.apply('123')//string
+    foo.apply(null)//widow
+    foo.apply(undefined)//window
+
+    //情况二:间接函数引用,则使用默认绑定
+    var obj = {
+      name: 'obj',
+      foo : foo
+    }
+    var obj2 = {
+      name: 'obj2',
+    }
+    obj2.foo = obj.foo//理解:这表达式的结果是foo函数,但你没调用它(),为什么表达式的值是foo,可以理解为var obj2 = obj.foo
+    (obj2.foo =  obj.foo)()//间接函数引用,则使用默认绑定
+    // 返回值是被赋的值，而不是左侧的变量或属性,比如console.log(a = 10); // 10
+    // 所以等价于下面
+    // var temp = obj.foo; // 赋值表达式返回的是 obj.foo
+    // temp(); // 直接调用
+    
+  </script>
+</body>
+</html>

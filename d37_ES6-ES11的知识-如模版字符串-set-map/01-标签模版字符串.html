@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let name = 'cao'
+    
+    //标签模版字符串
+    function foo(...args) {
+      console.log('参数', args)
+    }
+
+    foo`my name is ${name},height is ${1.88}`
+    /* 
+      array[3]
+      0 : ['my name is ', ',height is ', '', raw: Array(3)]
+      1 :  "cao"
+      2 : 1.88
+     */
+  </script>
+</body>
+</html>

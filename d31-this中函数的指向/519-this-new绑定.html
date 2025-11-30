@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /* new的作用
+
+      new 是为了解决 JavaScript 面向对象编程中的对象创建问题，引入了一种类似 类实例化 的方式，提升了代码的可读性和结构化：
+        自动创建新对象并绑定 this。
+        让 JavaScript 具备类似 Java、C++ 的 “构造函数” 机制。
+        避免手动设置 prototype，简化对象创建流程
+
+        没有之前的写法:
+        // 方法 1: 直接创建对象
+        // 方法 2: Object.create() 创建一个继承的对象
+        let person2 = Object.create(person1);
+        person2.name = "Bob";
+        console.log(person2.name);
+
+     */
+
+    //操作如下:
+    //1.创建一个全新空对象(fn)
+    //2.将空对象的原型指向函数的prototype(即这个新创造的对象)
+    //3.将空对象绑定函数的this(this的绑定到这步就完成了),this是函数执行的过程中进行绑定,this是动态的
+    //4,如果函数没有返回其他对象,表达式返回这个新对象
+
+    var obj = {
+      aa : '123',
+      fn : function(){
+        var name = 'what'
+        console.log('this',this)
+      }
+    }
+    new obj.fn//fn {}
+    new obj.fn()//fn {}
+
+    var foo =new obj.fn//直接调用了fn,如同var foo = obj.fn()一样但obj.fn不会调用
+    // foo()//foo不是个函数,foo是对象
+    var fo0 =obj.fn//不会调用
+
+    function fn() { 
+      this.name = 'what'
+      console.log('this',this)
+    }
+    new fn//fn {name: 'what'},object
+    new fn()//fn {name: 'what'},两个一样的,对
+    //没有显式地加上一对圆括号()，但JavaScript引擎仍然会将其视为一个函数调用，因为new操作符期望后面跟着一个函数
+    //始终在调用构造函数时使用圆括号是一种更好的编程习惯,尤其是当构造函数需要参数时
+
+
+  
+    
+  </script>
+</body>
+</html>

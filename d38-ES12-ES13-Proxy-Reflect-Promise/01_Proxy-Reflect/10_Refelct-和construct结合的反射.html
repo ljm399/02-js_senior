@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function Person(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+    function Student(name, age, grade) {
+      //替换这种方法
+      // Person.call(this, name, age);
+    }
+
+    const stu = Reflect.construct(Person, ['Tom', 20], Student);//执行的是Student.prototype.__proto__ === Person.prototype
+    console.log(stu)
+    console.log(stu.__proto__ === Student.prototype )//true
+  </script>
+</body>
+</html>

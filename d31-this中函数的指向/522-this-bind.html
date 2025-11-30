@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //bind:翻译成中文就是绑定
+    function foo(a, b) {
+      console.log(this)
+      console.log(a, b)
+    }
+    var obj = {
+      name : 'obj',
+      foo2 : function () {
+        console.log(foo2)
+      }
+    }
+    // foo.call(obj, 10)
+    // foo.call(obj, 10)
+    //问题:要是一直想调用foo时,且使他this永远指向obj,怎么办?
+    //bind:创建一个新的绑定函数,在bind()调用时,这个新函数的this被指定为bind()的第一个参数,其余参数作为新函数的参数
+
+    foo.bind(obj, 10,20)//这只是创建了一个新的绑定函数(只不过这个函数复制了foo的方法和属性),并没有调用
+    foo.bind(obj, 10,20)()//调用,obj,10,20
+
+    //调用方式二
+    var bar = foo.bind(obj, 10,20)
+    bar()
+
+
+    /* 参数解释
+      function foo(a, b, c) {
+        console.log(this, a, b, c);
+      }
+
+      const newFoo = foo.bind({ x: 100 }, 10, 20);
+
+      newFoo(30); 
+      // 输出: { x: 100 } 10 20 30
+
+    */
+  </script>
+</body>
+</html>

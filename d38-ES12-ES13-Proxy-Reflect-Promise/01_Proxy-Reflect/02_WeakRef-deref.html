@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let obj = { 
+      name : 'codecao',
+      age : 18
+    }
+
+    // let obj2 = obj
+    // let obj3 = obj
+    //解决:弱引用
+    let obj2 = new WeakRef(obj)
+
+    const finalRegistry = new FinalizationRegistry((value) => {
+      console.log('某个对象被回收了', value)
+    } )
+
+    finalRegistry.register(obj, 'codecao')
+
+    obj = null
+    //问题:这里obj没有被回收,因为obj2和obj3还在引用它
+    //但要把obj和obj2都设为null,太麻烦
+
+    //拿到obj2的引用对象(那obj就不会被回收了)
+    console.log(obj2.deref())
+
+
+  </script>
+</body>
+</html>

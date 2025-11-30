@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //箭头函数不会绑定this,arguments
+    var arrow = (a,b,c) => {
+      // console.log(arguments)//arguments is not defined
+      console.log(this)//window
+    }
+    arrow(1,2,3)
+
+    //箭头函数不能作为构造函数(不能与new一起调用)
+    
+    var obj = {
+      name: 'obj',
+      arrow2 : () => {
+      console.log('arrow2')
+    }
+    }
+    new obj.arrow2//obj.arrow2 is not a constructor
+    new obj.arrow2()//与上面一样,
+    (new obj.arrow2)()//与上面一样,三者一个意思
+    //箭头函数是表达式,不是像函数一样可以声明
+
+    
+  </script>
+</body>
+</html>

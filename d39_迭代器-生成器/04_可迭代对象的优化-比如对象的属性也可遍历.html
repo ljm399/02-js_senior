@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    const infos = {
+      name: "John",
+      age: 30,
+      city: "New York",
+      friends : ["Alice", "Bob","bulb"],
+      [Symbol.iterator]: function() {
+        let index = 0;
+        // this绑定:const iterator = infos[Symbol.iterator]();知道是infos
+        
+        // const keys = Object.keys(this);
+        // const values = Object.values(this);
+        const entries = Object.entries(this);
+        const infosIterator = {
+          next: function() {
+            if(index < entries.length) {
+              return { value: entries[index++], done: false };
+            } else {
+              return { done: true };
+            }
+         }
+        }
+        return infosIterator;
+      }
+
+
+    }
+    
+    for(let info of infos) {
+      console.log(info); 
+      /* 
+      (2) ['name', 'John']
+      (2) ['age', 30]
+      (2) ['city', 'New York']
+      (2) ['friends', Array(3)]
+      */
+    }
+
+    //本质
+    const iterator = infos[Symbol.iterator]();
+    console.log(iterator.next())
+    console.log(iterator.next())
+    console.log(iterator.next())//{value: Array(2), done: false}
+    console.log(iterator.next())
+    
+
+  
+
+
+  </script>
+</body>
+</html>

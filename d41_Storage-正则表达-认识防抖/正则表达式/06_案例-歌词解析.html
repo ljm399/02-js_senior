@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const lyricString = "[00:12.345]清晨的阳光洒满窗前\n[00:22.789]微风拂过你的脸\n[00:35.124]那一刻我想起从前\n[00:47.300]岁月如歌 伴我们走远\n[01:02.578]此刻心里只想你在身边\n[01:15.420]不再畏惧未知的明天\n[01:30.839]星空下我们畅谈无眠\n[01:44.712]一起书写属于我们的诗篇\n[00:12.345]Morning sunshine fills the window\n[00:22.789]Breeze caresses your face\n[00:35.124]At that moment, I recall the past\n[00:47.300]Time flows like a song, taking us afar\n[01:02.578]Now I just want you by my side\n[01:15.420]No longer fearing the unknown tomorrow\n[01:30.839]Under the starlit sky, we talk through the night\n[01:44.712]Together, we write our shared story\n"
+
+    const lyricsArray = lyricString.split('\n')
+    const rep = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/i
+    const newLyric = []
+    // console.log(lyrics)
+    for (let lyric of lyricsArray) {
+      // 转化为秒为单位的如[01:02.578] -> 625s 方便逻辑处理
+      const result = lyric.match(rep)
+      if(!result) continue
+      const minuteTime = result[1]*60*1000
+      const secondTime = result[2]*1000
+      const millisecondTime = result[3].length === 3? result[3]*1 : result[3]*10
+      const time = minuteTime + secondTime + millisecondTime
+      // console.log(time)
+
+      // 获取内容
+      const content = lyric.replace(rep, '').trim()
+      // console.log(content)
+
+      // 等价于newLyric.push({time: time, content: content});
+      newLyric.push({time, content})
+    }
+    console.log(newLyric)
+  </script>
+</body>
+</html>

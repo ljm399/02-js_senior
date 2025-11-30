@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const obj = {
+      name: 'John',
+    }
+    // obj = 3//Uncaught TypeError: Assignment to constant variable.
+    
+    obj.name = 'John Doe';//可以,因为是obj是赋值引用类型
+    
+  </script>
+</body>
+</html>

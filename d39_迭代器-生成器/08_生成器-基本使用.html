@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function* foo(...args) {
+      console.log('第一个参数', ...args)
+
+      const next1 = yield "第一个value"
+      console.log('第二个参数', next1)
+
+      const next2 =  yield "第二个value"
+      console.log('第三个参数', next2)
+      return '我是return'
+
+      yield "第三个value"
+      console.log('第四个参数',next3)
+    }
+
+    //调用生成器函数,返回一个迭代器对象
+    // 第一个参数在foo,不是generator.next()中传入
+    const generator = foo(1, 2)
+    // 调用next方法
+    // console.log(generator.next())//{ value: '第一个value', done: false }
+    // console.log(generator.next('我是第二个next的参数'))//{ value: '第二个value', done: false }
+    // console.log(generator.next())// { value: undefined, done: true }
+
+    // 中间直接return
+    console.log(generator.next())//{ value: '第一个value', done: false }
+    console.log(generator.next('第二个next的参数'))//{ value: "我是第二个value", done: false }
+    console.log(generator.next("第三个next的参数"))//{ value "我是return", done: true }
+    console.log(generator.next("第四个next的参数"))// { value undefined, done: true }
+    console.log(generator.next())// { value undefined, done: true }
+    console.log(generator.next())// { value undefined, done: true }
+
+  </script>
+  </script>
+</body>
+</html>

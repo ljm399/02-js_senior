@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    class Person {//不需要加逗号
+      constructor(name, age) {
+        this.name = name
+        this.age = age
+      }
+
+      //1,公共实例属性
+      height = 180
+
+      //2.公共私有实例属性
+      //方法一:程序员之间的约定
+      _intro = 'name is cao'
+
+      //方法二:#,程序强行规定
+      #_intro = 'name is cao2'
+
+      //3,类属性
+      //公共
+      static sex = '男'
+      //私有
+      static #sex = '女'
+
+      //4,block代码:里面的代码当创建新Person对象(new Person())就会被执行:只一次
+      static {
+        console.log('block代码执行了')
+      }
+    }
+
+    const p = new Person('张三', 18)
+    console.log(p.name, p.age, p.height)
+    // console.log(p._intro, p.#_intro)
+    // console.log(Person.sex, Person.#sex)
+  </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const promise = new Promise((resolve, reject) => {
+      // resolve('Success!')
+      reject('Error!')
+    })
+    //then和catch调用两种的方法
+    //第一种(传入两个参数)
+    promise.then(res => {
+      console.log('第一种成功',res)
+    },err => {
+      console.log('第一种失败',err)
+    })
+
+    //第二种
+    promise.then(res => {
+      console.log('成功',res)
+    }).catch(err => {
+      console.log('失败',err)
+    })
+
+    //支持链式调用
+    promise.then(res => {
+      console.log('第一种成功',res)
+    }).catch(err => {
+      console.log('第一种失败',err)
+    }).then(res => {//第个then拿到的是前一个then的返回值,这里没有(实际是resolve(undefined)),所有第二个是执行then而不是err.其参数是undefined
+      console.log('第二种成功',res)
+    }).catch(err => {
+      console.log('第二种失败',err)
+    })
+
+    //等同于上面的写法,但是第一种写法更清晰
+    // promise.then(res => {
+    //   console.log('第一种成功',res)
+    // },err => {
+    //   console.log('第一种失败',err)
+    // }).then(res => {//第个then拿到的是前一个then的返回值,这里没有(实际是resolve(undefined)),所有第二个是执行then而不是err.其参数是undefined
+    //   console.log('第二种成功',res)
+    // },err => {
+    //   console.log('第二种失败',err)
+    // })
+
+
+
+
+    //调用多个then/catch-全会执行,Excutor会依次告诉他们状态
+    promise.then(res => {
+      console.log('成功',res)
+    }).catch(err => {
+      console.log('失败',err)
+    })
+
+    promise.then(res => {
+      console.log('成功',res)
+    }).catch(err => {
+      console.log('失败',err)
+    })
+
+    promise.then(res => {
+      console.log('成功',res)
+    }).catch(err => {
+      console.log('失败',err)
+    })
+
+    </script>
+</body>
+</html>

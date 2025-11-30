@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form >
+    <input type="text" name="name"  >
+    <input type="text" name="age">
+  </form>
+  <button class="send">发送</button>
+
+
+
+  <script>
+    const sendBtn = document.querySelector('.send')
+    const form = document.querySelector('form')
+    sendBtn.onclick = function() {
+
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        console.log(xhr.response)
+      }
+      //向服务器请求传参
+      //方式一:get->query
+      // xhr.open('GET', 'https://jsonplaceholder.typicode.com/posts?name=why&age=18');
+  
+      //方式二:post->urlencoded
+      // xhr.open('POST', 'https://jsonplaceholder.typicode.com/posts');
+      // //设置请求头
+      // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+      // //设置请求体
+      // xhr.send('name=why&age=18')//不用有分隔符;
+  
+      //方式三:post->form-data
+      // xhr.open("post", "https://jsonplaceholder.typicode.com/posts");
+      // //fomrElement对象转换成formData对象
+      // const formData = new FormData(form)
+      // xhr.send(formData)
+
+      //方式四:post->json
+      xhr.open("post", "https://jsonplaceholder.typicode.com/posts");
+      //设置请求头
+      xhr.setRequestHeader('Content-Type', 'application/json')
+      //设置请求体
+      const data = {name: form.name.value, age: form.age.value}
+      xhr.send(JSON.stringify(data))//必须要json字符串格式;因为上传对象服务器解析不了;
+
+    }  
+
+
+
+ 
+  </script>
+</body>
+</html>

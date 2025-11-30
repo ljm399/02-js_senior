@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //bigint 解决js中Number类型最大安全值的问题
+    console.log(Number.MAX_SAFE_INTEGER)
+    const num = 9007199254740996
+    console.log(num)//大于最大安全值9007199254740991,则打印的值可能不准确
+    //bigint 解决这个问题
+    const num2 = 9007199254740991n
+    console.log(num2)
+
+    //可选择链
+    //要判断obj的info对象是否存在，如果不存在则十分危险
+    //但用if判断太麻烦
+    const obj = {
+      name: 'zhangsan',
+      age: 18,
+      info: {
+        sex: '男'
+      }
+    }
+    console.log(obj?.info?.sex)//可选链操作符，如果前面的表达式为null或者undefined则不会报错而是返回undefined
+  </script>
+</body>
+</html>

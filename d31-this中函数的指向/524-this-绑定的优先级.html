@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //优先级
+    //1,new
+    //2,bind,
+    //3,call/apply,
+    //4,隐式绑定,
+    //5,默认绑定
+
+    function foo() {
+      console.log(this)
+    }
+    var obj = {
+      name: 'obj',
+    }
+    var obj2 = {
+      name: 'obj2',
+    }
+    //默认绑定优先级最低,这也是个道理
+    obj.foo = foo
+    obj.foo()//obj
+    foo()//window
+
+
+    //显示绑定>隐式绑定
+    obj.foo.apply(obj2)//obj2
+
+
+    //bind高于隐式绑定
+    var bar = foo.bind('aaa')
+    var obj2 = {
+      name: 'obj2',
+      baz : bar
+    }
+    obj2.baz()//'aaa'
+
+
+    //new绑定>隐式绑定
+    var obj3 = {
+      name: 'obj3',
+      foo3 : function () {
+        console.log('obj3',this,typeof this)
+      }
+    }
+    new obj3.foo3()//foo3,object
+
+
+    //new不能和apply/call一起使用
+    var obj4 = {
+      name: 'obj4',
+    }
+    function foo4() {
+      console.log(this)
+    }
+    foo4.apply(obj4)//obj4
+    // new foo4.apply(obj4)//报错,因为new使foo4是个对象了,对象不能调用,所以不能加obj4,所有new不能与apply/call一起使用
+
+
+    //对象可以用call/apply
+    var obj5 = {
+      name: 'obj5',
+    }
+    // obj5.call(obj4)//不可以,是函数里面的this,obj哪有this,而且obj也不能调用,函数才能调用
+
+
+    //new>bind
+    function foo6() {
+      console.log('foo6',this)
+    }
+    var bindFn = foo6.bind('aaa')
+    new bindFn()//foo6,而不是'aaa
+
+
+    //bind>apply/call
+    var obj7 = {
+      name: 'obj7',
+    }
+    function foo7() {
+      console.log('foo7',this)
+    }
+    var bindFn = foo7.bind('bbbbb')//这个bindFn是个函数,但没调用
+    bindFn.apply(obj7)//'bbbb'
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="./utils/Cache.js"></script>
+  <script>
+    const local = new Cache();
+    const session = new Cache(false)
+    local.setCache('name', 'local')
+
+    // 名字相同，后面的会覆盖前面的
+    session.setCache('name', 'session')
+    session.setCache('name', 'session2')
+    session.setCache('name2', 'session2')
+
+    session.clear()
+  </script>
+</body>
+</html>

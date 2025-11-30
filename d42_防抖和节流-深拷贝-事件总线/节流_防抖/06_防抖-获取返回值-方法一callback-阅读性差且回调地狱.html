@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <button class="cancel">取消</button>
+  <!-- 本地引入 -->
+  <script>
+    const inputEl = document.querySelector('input')
+
+
+    function hydebounce(fn, delay, immediate = false, callback= false) {
+      let timer = null
+      let isInvoke = false
+      
+      //不能用箭头函数,否则this执行hydebounce的this即window
+      const _debounce = function (...argu) {
+
+        //如果上次timer未在delay时间内执行,则清除上次的timer
+        if(timer) clearTimeout(timer)
+        let res = null
+        //立刻执行功能
+        if (immediate && !isInvoke) {
+
+          //获取返回值
+          res = fn.apply(this, argu)
+          callback && callback(res)
+
+          isInvoke = true
+          return
+        }
+
+        timer = setTimeout(() => {
+          res = fn.apply(this, argu)
+          callback && callback(res)
+          timer = null
+        }, delay)
+      }
+
+      _debounce.cancel = function () {
+        clearTimeout(timer)
+      }
+
+      return _debounce
+    }
+
+    let counter = 1
+
+    //获取返回值:方式一:传入回调函数
+    const debounceFn = hydebounce(function (event) {
+      console.log("发送网络请求${counter++}",this.value, event)
+      return "哈哈哈哈我是返回值"
+    }, 1000, true, function(res) {
+      console.log(res)
+    })
+    inputEl.oninput = debounceFn
+
+  </script>
+</body>
+</html>

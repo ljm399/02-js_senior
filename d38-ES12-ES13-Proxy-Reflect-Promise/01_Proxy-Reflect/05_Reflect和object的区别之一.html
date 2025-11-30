@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    "use strict";
+    const obj = {
+      name: 'how',
+      age: 20
+    }
+
+    Object.defineProperty(obj, 'age', {
+      configurable: false,
+    })
+    // delete obj.age;//报错,在js保持很危险,后面代码都不能执行
+    if (Reflect.deleteProperty(obj, 'age')) {
+      console.log('删除成功')
+    }
+    else {
+      console.log('删除失败',obj)
+    }
+
+    
+
+  </script>
+</body>
+</html>

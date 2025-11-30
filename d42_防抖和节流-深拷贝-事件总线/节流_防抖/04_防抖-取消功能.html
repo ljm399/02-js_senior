@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <button class="cancel">取消</button>
+  <!-- 本地引入 -->
+  <script src="./js/undersocre.js"></script>
+  </script>
+  <script>
+    const inputEl = document.querySelector('input')
+    // 防抖处理input元素的输入
+    // let counter = 1
+    // inputEl.oninput = _.debounce(function () {
+    //   console.log("发送网络请求${counter++}",this.value)
+    // }, 1000)
+
+    function hydebounce(fn, delay) {
+      //记录上次事件触发的timer
+      let timer = null
+      
+      //不能用箭头函数,否则this执行hydebounce的this即window
+      const _debounce = function (...argu) {
+
+        //如果上次timer未在delay时间内执行,则清除上次的timer
+        if(timer) clearTimeout(timer)
+
+        timer = setTimeout(() => {
+          fn.apply(this, argu)
+          timer = null
+        }, delay)
+      }
+
+      //取消功能
+      //_debounce是个函数,函数是个对象可以给其加属性
+      _debounce.cancel = function () {
+        clearTimeout(timer)
+      }
+
+      return _debounce
+    }
+
+    // 自己实现防抖
+    let counter = 1
+
+    //触发input事件,会执行hydebounce函数,但不等于hydebounce的this指向input元素,而是hydebounce的返回值
+    //hydebounce这样调用,其this执行window,而不是input
+    const debounceFn = hydebounce(function (event) {
+      //这里能拿到oninput的event是hydebounce函数里面的操作
+      console.log("发送网络请求${counter++}",this.value, event)
+    }, 1000)
+    inputEl.oninput = debounceFn
+    //取消功能
+    const cancelBtn = document.querySelector('.cancel')
+    debugger
+
+    //这两种是一样的效果,但第一种简洁,第二种可以在添加额外功能时使用
+    // cancelBtn.onclick = debounceFn.cancel
+    
+    //这种是将个匿名函数赋值给onclick,在里面调用debounceFn.cancel()
+    cancelBtn.onclick = function () {
+      debounceFn.cancel()
+    }
+  </script>
+</body>
+</html>

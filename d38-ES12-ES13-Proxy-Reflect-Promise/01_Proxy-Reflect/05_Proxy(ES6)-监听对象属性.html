@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const obj = {
+      name : 'codecao',
+      age : 20,
+    }
+
+    //1,创建一个Proxy对象
+    const objProxy = new Proxy(obj,{
+      set: function(target, key, newvalue) {
+        console.log("set",target,key,newvalue)//{name: 'codecao', age: 20} name codecao2
+        target[key] = newvalue//不执行这句则不更新obj里面值
+      },
+      get: function(target, key) {
+        console.log("get",target,key)
+        return target[key]//不返回则undefined
+      }
+    })
+    objProxy.name = 'codecao2'
+    console.log(objProxy.name)
+    console.log(obj.name)
+  </script>
+</body>
+</html>

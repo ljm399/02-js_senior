@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <script>
+      //1,普通函数中有this的表示符
+      function fn1(){
+        console.log('fn1',this)
+      }
+      fn1()//window
+      fn1.apply('aaa')//'aaa'
+
+      //2,箭头函数压根没有this
+      var fn2 = ()=> console.log('fn2',this)
+      fn2.apply('aaa')//window,箭头函数没有this
+      //因为箭头函数没有this,所有this指向的是外层函数的this,最终到window
+
+      //应用
+      //网络请求的工具函数
+      function request(url, callbackFn) {
+        var results = [1, 2, 3]
+        callbackFn(results)
+      }
+      var obj = {
+        name : [],
+        network : function() {
+          //早期没有箭头函数通过这个方式
+        //   var _this = this
+        //   request('http://www.baidu.com', function(data) {
+
+        //     // this.name = data//默认绑定,不是results,this指向的是window    
+
+        //     _this.name = data//本层函数无法像箭头函数一样,没有this,从而this指向的是外层函数的this,而这里是通过赋值得到的
+        // })}
+
+        //现在箭头函数
+        request('http://www.baidu.com', (data) => 
+          this.name = [].concat(data)
+        )
+      }}
+      
+    
+    </script>
+</body>
+</html>

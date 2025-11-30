@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //隐式绑定有个前提:必须在调用的对象内部有个对函数的引用比如以下
+    function foo() {
+
+      console.log('this',this,typeof this)
+    }
+    var obj = {
+      name : 'obj',
+    }
+    obj.foo = foo//对象必须有对函数的引用
+    obj.foo()//隐式绑定
+
+    //要是我不想有对函数的引用,即是显示绑定,call,apply,bind
+
+    //js中所有函数都可以用call,apply
+
+    //以下全无返回值
+    foo.call()//执行函数,并且把this绑定到()里面的值(以下一样)
+    foo.call(obj)//显示绑定
+    foo.call(123)//Number {123} object(数字的包装对象)
+    foo.call('abc')//String {'abc'} object(字符串的包装对象)
+    foo.call(undefined)//window
+    foo.call(true)//boolean
+    foo.call(null)//window  
+
+    
+  </script>
+</body>
+</html>

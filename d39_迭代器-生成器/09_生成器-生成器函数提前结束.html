@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function* foo(...args) {
+      console.log('第一个参数', ...args)
+      const name1 = yield "第一个value"
+      console.log('第二个参数', name1)
+
+      try{
+        const name2 = yield "第二个value"
+        console.log('第三个参数', name2) 
+      }
+      catch(e) {
+        console.log('捕获异常', e)
+      }
+
+      const name3 = yield "第三个value"
+      console.log('第四个参数', name3)
+      return '我是return'
+    }
+
+    const iterator = foo(1, 2)
+    console.log(iterator.next())//{value: "第一个value", done: false}
+    console.log(iterator.next(3))//{value: "第二个value", done: false}
+
+    // 1.generator.return() 终止迭代器
+    // console.log(iterator.return('我是外面的return'))//{value: "我是外面的return", done: true}
+    // console.log(iterator.next(4))//{value: undefined, done: true}
+    // console.log(iterator.next(5))//{value: undefined, done: true}
+    // console.log(iterator.next())
+    // console.log(iterator.next())
+    
+
+    // 2.generator.throw() 抛出异常
+    console.log(iterator.throw('我是外面的异常'))//报错 第15行 Uncaught 我是外面的异常
+    console.log(iterator.next(4))//没结果,因为前面的报错没有捕获
+    console.log(iterator.next(5))//一样
+    console.log(iterator.next())
+    //解决:里面try catch捕获异常
+
+    
+
+  </script>
+  </script>
+</body>
+</html>

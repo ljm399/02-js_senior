@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="./utils/hyajax_Promise.js"></script>
+  <script>
+    // 练习ajax ->封装ajax函数,因为每次请求都要写一遍，所以封装成一个函数
+    // 这个函数一般在一个js文件中
+    // function hyajax({
+    //   url,
+    //   method = "get",
+    //   data = {},
+    //   headers = {},
+    //   success,
+    //   failure 
+    // = {}}) {
+    //   //1,创建对象
+    //   const xhr = new XMLHttpRequest();
+    //   //2,监听数据
+    //   xhr.onload = function () {
+    //     //正常状态码是在200-300之间
+    //     if (xhr.status >= 200 && xhr.status < 300) {
+    //       success && success(xhr.response);
+    //     } else {
+    //       failure && failure({ status: xhr.status, message: xhr.statusText });
+    //     }
+    //   }
+
+    //   //3,设置类型
+    //   xhr.responseType = "json";
+
+    //   //4,open方法
+    //   xhr.open(get, url)
+
+    //   //5,send方法
+    //   xhr.send()
+    // }
+
+    // 回调函数,容易地狱回调问题
+    // hyajax({
+    //   url: "https://jsonplaceholder.typicode.com/posts",
+    //   method: "get",
+    //   data: {
+    //     name: 'why',
+    //     age: 18
+    //   },
+      
+    //   success: function(response) {
+    //     console.log("res", response)
+    //   },
+    //   failure: function(error) {
+    //     console.log(err.message)
+    //   }
+
+    // })
+
+      //解决:让源代码放回promise就可以链式调用
+     hyajax({
+      url: "https://jsonplaceholder.typicode.com/posts",
+      method: "get",
+      data: {
+        name: 'why',
+        age: 18
+      }
+    }).then(res => {
+      console.log("res", res)
+    }).catch(err => {
+      console.log(err.message)
+    })
+  </script>
+</body>
+</html>

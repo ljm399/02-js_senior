@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">账号
+  <div class="tip"></div>
+  <script>
+    var input = document.querySelector('input[type="text"]')
+    let tipEl = document.querySelector('.tip')
+
+    input.oninput = function() {
+      if (/aaaaa+/.test(this.value)) {
+        tipEl.innerHTML = '账号格式正确'
+      } else {
+        tipEl.innerHTML = '账号格式不正确'
+      }
+
+    }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button class="btn">监听点击0</button>
+  <button class="btn">监听点击1</button>
+  <button class="btn">监听点击2</button>
+  <button class="btn">监听点击3</button>
+  <script>
+    const btns = document.querySelectorAll('.btn');
+    //问题:i都是4,因为var定义的变量是全局的，所以i是全局的即使4
+    for(var i = 0; i < btns.length; i++) {
+      var btnEl = btns[i];
+      btnEl.onclick = () => console.log('i',i)
+    }
+
+    //解决一:自己弄个块作用域:i2是块作用域的，访问的是4个Function的i
+    for(var i = 0; i < btns.length; i++) {
+      var btnEl = btns[i];
+      // btnEl.onclick = (i2 => console.log('i',i2))(i)
+      (function(i2){
+        btnEl.onclick = () => console.log('i',i2)
+      })(i)
+    }
+
+    //解决二:let定义的变量是块作用域(首页)
+    for(let i = 0; i < btns.length; i++) {
+      var btnEl = btns[i];
+      btnEl.onclick = () => console.log('i',i)
+    }
+  </script>
+</body>
+</html>

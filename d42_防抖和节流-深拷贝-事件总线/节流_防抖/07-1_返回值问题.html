@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button>test</button>
+  <script>
+    function foo(fn) {
+      const foo2 = () => {
+        console.log("foo2")
+        fn()
+        return 'foo2里面'
+      }
+      foo2.test = () => {
+        console.log('foo2.test')
+      }
+
+      return foo2
+    }
+    const btn = document.querySelector('button')
+
+    //这里foo在事件触发时就执行了一次,并将其返回值赋值给btn.onclick,所有onclick事件触发执行的是foo2里面的fn函数
+    btn.onclick = foo(() => {
+      console.log('fn')
+    })
+
+    //这里一样,foo在事件触发时就执行了一次,并将其返回值赋值给hyWho,然后赋值给btn.onclick
+    const hyWho = foo(() => {
+      console.log('fn')
+    })
+    btn.onclick = hyWho
+    console.log(hyWho)//foo2这个函数
+    console.log(hyWho())//foo2里面(返回值)
+
+    //这两种方式效果一样,但第一种简洁,第二种可以在添加额外功能时使用
+    //第一种是将个匿名函数赋值给onclick,在里面调用text
+    //注意函数后面有没有括号
+    btn.onclick = () => {
+      hyWho.text()
+    }
+    btn.onclick = hyWho.test
+  </script>
+</body>
+</html>

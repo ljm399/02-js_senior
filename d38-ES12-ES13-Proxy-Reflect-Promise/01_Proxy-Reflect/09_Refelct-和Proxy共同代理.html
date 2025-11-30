@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const obj = {
+      _name: 'John',
+      set name(newValue) {
+        this._name = newValue;
+        console.log(this === objProxy)//true
+      },
+      get name() {
+        return this._name;
+      }
+    }
+
+    //非Reflect来获取和修改属性值步骤
+    obj._name = 'Tom'
+    console.log(obj._name)//去函数先调用getter，getter找到_name属性,然后返回_name的值,setter同理
+
+    //Reflect来获取和修改属性值步骤
+    const objProxy = new Proxy(obj, {
+      set: function (target, key, value, receiver) {
+        //非reflect写法
+        // target[key] = newValue;缺点:还是对原对象修改,使用了里面this,而this指向原对象
+
+        //Reflect写法
+        //1,好处一:不再操作原对象
+        //2,好处二:返回一个布尔值,true表示成功,false失败
+        //3,好处三:receiver是外层的Proxy对象,而不是原对象
+
+        //当加了第四个参数即obj里面的this指向objProxy
+        console.log("proxy中setter方法被调用")
+        const isSuccess = Reflect.set(target, key, value, receiver);
+        if(!isSuccess) {
+          throw new Error(`set ${key} failed`);
+        }
+      },
+
+      get: function (target, key, receiver) {
+        //get方法里面一样,因为obj的get方法里面也用到了this,所以也要改成Reflect.get()方法
+        //注意:当getter方法用到reciever参数时,里面值会被调用两次
+        console.log("proxy中getter方法被调用")
+        return Reflect.get(target, key, receiver);
+      }
+
+    })
+
+    objProxy.name = 'Tom22'
+    console.log(obj)
+
+
+  </script>
+</body>
+</html>

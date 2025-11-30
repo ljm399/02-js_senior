@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const name = ['John', 'Jane', 'Doe']
+    const age = [20, 22, 18]
+
+    function* createArrayIterator(arr) {
+      for (let i = 0; i < arr.length; i++) {
+        yield arr[i]
+      }
+    }
+
+    const nameIterator = createArrayIterator(name)
+    console.log(nameIterator.next())// { value: 'John', done: false }
+    console.log(nameIterator.next())// { value: 'Jane', done: false }
+    console.log(nameIterator.next())// { value: 'Doe', done: false }
+    console.log(nameIterator.next())// { value: undefined, done: true }
+
+    // 生成器生成某个范围的值
+    function* createRangeIterator(start, end) {
+      for (let i = start; i <= end; i++) {
+        yield i
+      }
+    }
+
+    const rangeIterator = createRangeIterator(1, 3)
+    console.log(rangeIterator.next())// { value: 1, done: false }
+    console.log(rangeIterator.next())// { value: 2, done: false }
+    console.log(rangeIterator.next())// { value: 3, done: false }
+    console.log(rangeIterator.next())// { value: undefined, done: true }
+  </script>
+</body>
+</html>

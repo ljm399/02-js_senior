@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // entries将对象转换为键值对数组
+    // fromEntries将键值对数组转换会为对象
+    const obj = {
+      name : 'codecao',
+      age : 18
+    }
+    const entries = Object.entries(obj);
+    const fromEntrie = Object.fromEntries(entries);
+    // 报错，因为对象不是entries格式,其不可迭代
+    // const fromEntrie2 = Object.fromEntries(obj);
+    console.log(entries)
+    console.log(fromEntrie)
+
+    // entries应用
+    const searchString = '?name=cao&age=18&sex=male'
+    const params = new URLSearchParams(searchString);
+    console.log(params.get('name'))
+    console.log(params.entries())//返回个迭代器对象，可以使用for of遍历
+
+    for (const item of params.entries()) {
+      console.log(item)
+    }
+
+    // fromEntries应用:转换为对象
+    const paramObj = Object.fromEntries(params.entries());
+    console.log(paramObj)//{name: 'cao', age: '18', sex: 'male'}
+  </script>
+</body>
+</html>

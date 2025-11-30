@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const obj = {
+      name : 'John Doe',
+      age : 18
+    }
+    const entries = Object.entries(obj)
+    console.log(entries)//[Array(2), Array(2)]
+    for (const entry of entries) {
+      const {key, value} = entry
+      console.log(key, value)//name John Doe age 18
+    }
+  </script>
+</body>
+</html>

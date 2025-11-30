@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button>取消请求</button>
+  <script>
+    // 过期请求
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      console.log(xhr.response)
+    }
+    //超时会回调ontimeout,且不会触发onload事件
+    xhr.ontimeout = function() {
+      console.log("请求过期:timeout")
+    }
+
+    // 取消后回调的函数
+    xhr.onabort = function() {
+      console.log("请求取消:abort")
+    }
+
+    xhr.responseType = "json";
+    xhr.timeout = 10000;
+    xhr.open("GET", "https://jsonplaceholder.typicode.com/posts");
+    xhr.send();
+
+    // 取消请求
+    const  cancelBtn =  document.querySelector("button");
+    cancelBtn.addEventListener("click", function() {
+      xhr.abort();
+    })
+
+
+  </script>
+</body>
+</html>

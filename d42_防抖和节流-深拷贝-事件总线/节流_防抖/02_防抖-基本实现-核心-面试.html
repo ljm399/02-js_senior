@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <!-- 本地引入 -->
+  <script src="./js/undersocre.js"></script>
+  </script>
+  <script>
+    const inputEl = document.querySelector('input')
+    // 防抖处理input元素的输入
+    // let counter = 1
+    // inputEl.oninput = _.debounce(function () {
+    //   console.log("发送网络请求${counter++}",this.value)
+    // }, 1000)
+
+    function hydebounce(fn, delay) {
+      //记录上次事件触发的timer
+      let timer = null
+      
+      // 触发事件
+      const _debounce = () => {
+
+        //如果上次timer未在delay时间内执行,则清除上次的timer
+        if(timer) clearTimeout(timer)
+
+        timer = setTimeout(() => {
+          fn()
+          timer = null
+        }, delay)
+      }
+      return _debounce
+    }
+
+    // 自己实现防抖
+    let counter = 1
+    //触发input事件,会执行hydebounce函数,但不等于hydebounce的this指向input元素,而是hydebounce的返回值
+    inputEl.oninput = hydebounce(function () {
+      console.log("发送网络请求${counter++}",this.value)
+    }, 1000)
+
+
+  </script>
+</body>
+</html>

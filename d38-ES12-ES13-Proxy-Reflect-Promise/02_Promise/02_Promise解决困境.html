@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function exeCode(counter) {
+      return promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (counter > 0) {
+            resolve("执行成功");
+          } else {
+            reject("执行失败");
+          } 
+        }, 1000);
+    })
+  }
+    // //Es5之前都是这种写法,
+    // //问题:1.参数必须看源码,2.回调嵌套,3.回调地狱
+    // exeCode(1, (cunter) => {
+    //   console.log("执行成功",value)
+    // }, (err) => {
+    //   console.log("执行失败",err)
+    // })
+
+    exeCode(200).then(value => {
+      //value是resolve的返回值
+      console.log('执行成功', value)
+    }).catch(err => {
+      console.log('执行失败', err)
+    })
+
+
+  </script>
+</body>
+</html>

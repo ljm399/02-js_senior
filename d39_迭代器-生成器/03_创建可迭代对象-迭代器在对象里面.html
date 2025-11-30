@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    const infos = {
+      name: "John",
+      age: 30,
+      city: "New York",
+      friends : ["Alice", "Bob","bulb"],
+      [Symbol.iterator]: function() {
+        let index = 0;
+        const infosIterator = {
+          next: function() {
+            if(index < infos.friends.length) {
+              return { value: infos.friends[index++], done: false };
+            } else {
+              return { done: true };
+            }
+         }
+        }
+        return infosIterator;
+      }
+
+
+    }
+    
+
+    const iterator = infos[Symbol.iterator]();
+    console.log(iterator.next())
+    console.log(iterator.next())
+    console.log(iterator.next())//{value: 'bulb', done: false}
+    console.log(iterator.next())
+    
+
+    //因为infos对象实现了迭代器协议，所以可以直接使用for...of循环遍历其属性。
+    for(let info of infos) {
+      console.log(info); // 输出：Alice, Bob, bulb
+    }
+
+
+    //可迭代对象必然有个[Symbol.iterator]方法，该方法返回一个迭代器对象。
+    const nums = [1, 2, 3];
+    const iterator2 = nums[Symbol.iterator]();
+    console.log(iterator2.next())
+    console.log(iterator2.next())
+    console.log(iterator2.next())//{value: 3, done: false}
+    console.log(iterator2.next())
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //自定义类的可迭代器一般用不到,除非写框架那些
+    class Person {
+      constructor(name, age, height, friend) {
+        this.name = name;
+        this.age = age;
+        this.height = height;
+        this.friend = friend;
+      }
+      running() {}
+
+      [Symbol.iterator]() {
+        let index = 0;
+        const iterator = {
+          next: function() {
+            //.....
+          }
+        }
+        return iterator;
+      }
+    }
+  </script>
+</body>
+</html>
