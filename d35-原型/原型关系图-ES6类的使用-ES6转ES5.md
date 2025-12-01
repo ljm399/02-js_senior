@@ -7,6 +7,37 @@
 
 ![原型关系图](./d35.png)
 
+### 文字总结
+
+源头（上帝）：
+首先有 Object.prototype（它是万物的终极祖先）。
+第二层（函数之母的基因）：
+然后有 Function.prototype，它的 **proto** 指向 Object.prototype（继承了祖先）。
+第三层（生产函数的机器）：
+有一个叫 Function 的构造函数（有 Function.prototype）。
+它生产出了所有的函数，比如 function Person()，甚至 function Object()。
+(所以 Person 和 Object 是 Function 的实例)
+第四层（伴生关系）：
+当 function Person() 被生出来的时候，系统自动给它配了一个助手，叫 Person.prototype（用于存放实例方法），同时其也有个**proto**指向其父类（Function.prototype）
+第五层（生产最终对象）：
+我们用 new Person()（注意是用构造函数，不是用原型）生产出了 p1。
+p1 被告知：“如果你有什么找不到的属性，就去 Person.prototype 那个助手那里找。”
+
+### 类本质上就是对象，console.log(typeof Person); // 输出: 'function'，是函数，但函数也是对象
+
+### 作用域链 vs 原型链
+
+#### 一。作用域链 (Scope Chain)：
+
+管什么的？ 管变量访问的（比如 console.log(a)，a 是哪里来的）。
+跟类是对象有关系吗？ 有关系。因为类定义的位置决定了它能访问哪些变量（词法作用域）。
+核心规则： 函数/块在哪定义，作用域链就指向哪。
+
+#### 二。原型链 (Prototype Chain)：
+
+管什么的？ 管属性查找的（比如 p.sayHello()，p 本身没有 sayHello，去哪里找）。
+跟类是对象有关系吗？ 关系巨大！因为类是对象，所以类实例的 **proto** 指向类的 prototype
+
 # 二. ES6 类的使用
 
 ## 2.1 class 定义类
