@@ -7,21 +7,40 @@
 
 ![原型关系图](./d35.png)
 
-### 文字总结
+### 图中自己基础水没烧开 和 条件未明确，导致没懂
 
-源头（上帝）：
-首先有 Object.prototype（它是万物的终极祖先）。
-第二层（函数之母的基因）：
-然后有 Function.prototype，它的 **proto** 指向 Object.prototype（继承了祖先）。
-第三层（生产函数的机器）：
-有一个叫 Function 的构造函数（有 Function.prototype）。
-它生产出了所有的函数，比如 function Person()，甚至 function Object()。
-(所以 Person 和 Object 是 Function 的实例)
-第四层（伴生关系）：
-当 function Person() 被生出来的时候，系统自动给它配了一个助手，叫 Person.prototype（用于存放实例方法），同时其也有个**proto**指向其父类（Function.prototype）
-第五层（生产最终对象）：
-我们用 new Person()（注意是用构造函数，不是用原型）生产出了 p1。
-p1 被告知：“如果你有什么找不到的属性，就去 Person.prototype 那个助手那里找。”
+1. Person函数的原型对象这个框 是对 function Person()这个框里面的prototype对象 具体展开
+2. Person函数的原型对象的counstructor属性值 等于  function Person()  ------------ 你漏掉的知识点
+3. Person函数的原型对象肯定由 什么 new xx() 出来的
+   - 所以通过 new Object（） 得出 Object函数的原型对象
+   - Person函数的原型对象的_protot 指向 Object函数的原型对象（这个Object函数的原型对象就是prototype，再次提醒 xx函数的原型对象这个框 是对 function xx()这个框里面的prototype对象 具体展开）
+4. 有Object函数的原型对象 则就有 function Object() {} 这个框
+5. 然后 function Object() {} 这些函数 有_proto _ 必然指向 一个 prototype即 Fucntion函数的原型对象（再再次提醒：这个Object函数的原型对象就是prototype，再次提醒 xx函数的原型对象这个框 是对 function xx()这个框里面的prototype对象 具体展开）
+   - 漏掉的知识点
+     - Fucntion，Array，Object这三个都是全局就有的对象
+     - 可以const person = new Functinon() 即 function Person() 是 Function的实例
+       - 类比const a  = new Array() 创建的数组，a就是 Array的实例
+6. 其他看下面图片要是没懂就看回视频
+
+![](../4p.jpg)
+
+![5p](../5p.jpg)
+
+![6p](../6p.jpg)
+
+![7p](../7p.jpg)
+
+
+
+### 原型链 和 new 的作用
+
+![](../1new.jpg)
+
+![2effect](../2effect.jpg)
+
+![3effect](../3effect.jpg)
+
+
 
 ### 类本质上就是对象，console.log(typeof Person); // 输出: 'function'，是函数，但函数也是对象
 
@@ -98,7 +117,7 @@ var obj = {
     	set: function() {},
     	get: function() {}
     })
-
+  
     //方式二: 直接在对象定义访问器
     //监听_name什么时候被访问,设置什么新的值
     const obj = {
@@ -112,7 +131,7 @@ var obj = {
     		return this._name
     	}
     }
-
+  
     //class类中访问器
     class Person {
     	constructor(naem, age) {
